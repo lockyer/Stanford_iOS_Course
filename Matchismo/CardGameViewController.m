@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *cardCountButton;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (strong, nonatomic) NSMutableArray* history;
+@property (weak, nonatomic) IBOutlet UISlider *historySlider;
 @end
 
 @implementation CardGameViewController
@@ -32,6 +34,14 @@
     return _game;
 }
 
+- (NSMutableArray *)history
+{
+    if(!_history){
+        _history = [[NSMutableArray alloc] init];
+    }
+    return _history;
+}
+
 - (Deck *)createDeck
 {
     return [[PlayingCardDeck alloc] init];
@@ -45,13 +55,22 @@
 - (IBAction)touchNewGameButton:(UIButton *)sender
 {
     self.game = nil;
+    self.history = nil;
+    self.historySlider.value = 1;
     [self updateUI];
+    [self touchHistorySlider];
 }
 
 - (IBAction)touchCardButton:(UIButton *)sender {
     NSUInteger cardIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:cardIndex];
     [self updateUI];
+}
+
+- (IBAction)touchHistorySlider {
+    int index = self.historySlider.value * (self.history.count - 1);
+    self.descriptionLabel.text = self.history[index];
+    self.descriptionLabel.alpha = self.historySlider.value == 1 ? 1 : 0.5;
 }
 
 - (void)updateUI
@@ -80,6 +99,7 @@
             self.descriptionLabel.text = [NSString stringWithFormat:@"%@ don't match, %ld points!", self.descriptionLabel.text, (long)self.game.lastScore];
         }
     }
+    [self.history addObject:self.descriptionLabel.text];
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
 }
 
