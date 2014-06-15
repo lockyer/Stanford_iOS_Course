@@ -12,19 +12,25 @@
 
 - (int)match:(NSArray *)otherCards
 {
-    int score = 0;
+    NSMutableArray* cards = [[NSMutableArray alloc] initWithObjects:self, nil];
+    [cards addObjectsFromArray:otherCards];
     
-    if([otherCards count] == 1)
-    {
-        PlayingCard *otherCard = [otherCards firstObject];
-        if([self.suit isEqualToString:otherCard.suit]){
-            score = 1;
-        } else if(self.rank == otherCard.rank){
-            score = 4;
+    int suitScore = 0;
+    int rankScore = 0;
+    
+    for(int i=0; i<cards.count; ++i){
+        PlayingCard* cardA = cards[i];
+        for(int j=i+1; j<cards.count; ++j){
+            PlayingCard* cardB = cards[j];
+            if([cardA.suit isEqualToString:cardB.suit]){
+                suitScore += 1;
+            }
+            if(cardA.rank == cardB.rank){
+                rankScore += 4;
+            }
         }
     }
-    
-    return score;
+    return suitScore + rankScore;
 }
 
 -(NSString *)contents

@@ -15,20 +15,37 @@
 @property (nonatomic, strong) CardMatchingGame* game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *cardCountButton;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @end
 
 @implementation CardGameViewController
 
 - (CardMatchingGame *)game
 {
-    if(!_game) _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
-                                                         usingDeck:[self createDeck]];
+    if(!_game){
+        NSString* title = [self.cardCountButton titleForSegmentAtIndex:self.cardCountButton.selectedSegmentIndex];
+        _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
+                                                  usingDeck:[self createDeck]
+                                            withTargetCount:title.intValue];
+    }
     return _game;
 }
 
 - (Deck *)createDeck
 {
     return [[PlayingCardDeck alloc] init];
+}
+
+- (IBAction)touchCardCountButton
+{
+    self.game = nil;
+}
+
+- (IBAction)touchNewGameButton:(UIButton *)sender
+{
+    self.game = nil;
+    [self updateUI];
 }
 
 - (IBAction)touchCardButton:(UIButton *)sender {
@@ -39,6 +56,7 @@
 
 - (void)updateUI
 {
+    [self.cardCountButton setEnabled:!self.game.gameStarted];
     for(UIButton *cardButton in self.cardButtons){
         NSUInteger cardIndex = [self.cardButtons indexOfObject:cardButton];
         Card* card = [self.game cardAtIndex:cardIndex];
@@ -47,6 +65,20 @@
         [cardButton setBackgroundImage:[self backgroundImageForCard:card]
                               forState:UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
+    }
+    
+    self.descriptionLabel.text = @"";
+    for(Card* card in [self.game getLastMatches])
+    {
+        self.descriptionLabel.text = [self.descriptionLabel.text stringByAppendingString:card.contents];
+    }
+
+    if(self.game.endOfRound){
+        if(self.game.lastScore > 0){
+            self.descriptionLabel.text = [NSString stringWithFormat:@"Matched %@ for %ld points", self.descriptionLabel.text, (long)self.game.lastScore];
+        } else if(self.game.lastScore < 0) {
+            self.descriptionLabel.text = [NSString stringWithFormat:@"%@ don't match, %ld points!", self.descriptionLabel.text, (long)self.game.lastScore];
+        }
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
 }

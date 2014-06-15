@@ -10,8 +10,12 @@
 #import "Deck.h"
 
 @interface CardMatchingGame : NSObject
-- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck*)deck;
+- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck*)deck withTargetCount:(int)target;
 - (Card *)chooseCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
+- (NSArray *)getLastMatches;
 @property (nonatomic, readonly) NSInteger score;
+@property (nonatomic, readonly) BOOL gameStarted;
+@property (nonatomic, readonly) int lastScore;
+@property (nonatomic, readonly) BOOL endOfRound;
 @end
