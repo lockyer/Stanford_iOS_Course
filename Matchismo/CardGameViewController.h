@@ -13,4 +13,5 @@
 
 //protected, must implement in subclasses
 - (Deck *)createDeck;
+- (int)numberOfCardsToMatch;
 @end

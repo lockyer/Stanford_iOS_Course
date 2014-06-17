@@ -14,7 +14,6 @@
 @property (nonatomic, strong) CardMatchingGame* game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *cardCountButton;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (strong, nonatomic) NSMutableArray* history;
 @property (weak, nonatomic) IBOutlet UISlider *historySlider;
@@ -22,13 +21,18 @@
 
 @implementation CardGameViewController
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.historySlider.enabled = false;
+}
+
 - (CardMatchingGame *)game
 {
     if(!_game){
-        NSString* title = [self.cardCountButton titleForSegmentAtIndex:self.cardCountButton.selectedSegmentIndex];
         _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
                                                   usingDeck:[self createDeck]
-                                            withTargetCount:title.intValue];
+                                            withTargetCount:[self numberOfCardsToMatch]];
     }
     return _game;
 }
@@ -47,9 +51,10 @@
     return nil;
 }
 
-- (IBAction)touchCardCountButton
+//Abstract
+- (int)numberOfCardsToMatch
 {
-    self.game = nil;
+    return -1;
 }
 
 - (IBAction)touchNewGameButton:(UIButton *)sender
@@ -75,7 +80,7 @@
 
 - (void)updateUI
 {
-    [self.cardCountButton setEnabled:!self.game.gameStarted];
+    self.historySlider.enabled = self.game.gameStarted;
     for(UIButton *cardButton in self.cardButtons){
         NSUInteger cardIndex = [self.cardButtons indexOfObject:cardButton];
         Card* card = [self.game cardAtIndex:cardIndex];

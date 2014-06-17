@@ -15,9 +15,16 @@
 
 @implementation PlayingCardGameViewController
 
+//overrides abstract parent method
 - (Deck *)createDeck
 {
     return [[PlayingCardDeck alloc] init];
+}
+
+//overrides abstract parent method
+- (int)numberOfCardsToMatch
+{
+    return 2;
 }
 
 @end
