@@ -94,9 +94,9 @@
 
     if(self.game.endOfRound){
         if(self.game.lastScore > 0){
-            self.descriptionLabel.text = [NSString stringWithFormat:@"Matched %@ for %ld points", self.descriptionLabel.text, (long)self.game.lastScore];
+            self.descriptionLabel.text = [NSString stringWithFormat:@"Matched %@ for %d points", self.descriptionLabel.text, self.game.lastScore];
         } else if(self.game.lastScore < 0) {
-            self.descriptionLabel.text = [NSString stringWithFormat:@"%@ don't match, %ld points!", self.descriptionLabel.text, (long)self.game.lastScore];
+            self.descriptionLabel.text = [NSString stringWithFormat:@"%@ don't match, %d points!", self.descriptionLabel.text, self.game.lastScore];
         }
     }
     [self.history addObject:self.descriptionLabel.text];

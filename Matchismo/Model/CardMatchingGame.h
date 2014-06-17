@@ -14,7 +14,7 @@
 - (Card *)chooseCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
 - (NSArray *)getLastMatches;
-@property (nonatomic, readonly) NSInteger score;
+@property (nonatomic, readonly) int score;
 @property (nonatomic, readonly) BOOL gameStarted;
 @property (nonatomic, readonly) int lastScore;
 @property (nonatomic, readonly) BOOL endOfRound;
