@@ -15,22 +15,34 @@
     NSMutableArray* cards = [[NSMutableArray alloc] initWithObjects:self, nil];
     [cards addObjectsFromArray:otherCards];
     
-    int suitScore = 0;
-    int rankScore = 0;
+    int suitMatches = 0;
+    int rankMatches = 0;
     
     for(int i=0; i<cards.count; ++i){
         PlayingCard* cardA = cards[i];
         for(int j=i+1; j<cards.count; ++j){
             PlayingCard* cardB = cards[j];
             if([cardA.suit isEqualToString:cardB.suit]){
-                suitScore += 1;
+                suitMatches += 1;
             }
             if(cardA.rank == cardB.rank){
-                rankScore += 4;
+                rankMatches += 1;
             }
         }
     }
-    return suitScore + rankScore;
+    
+    int suitMatchScore = 0;
+    if(suitMatches == otherCards.count)
+    {
+        suitMatchScore = suitMatches * 4;
+    }
+    int rankMatchScore = 0;
+    if(rankMatches == otherCards.count)
+    {
+        rankMatchScore = rankMatches * 8;
+    }
+    
+    return suitMatchScore + rankMatchScore;
 }
 
 -(NSString *)contents
