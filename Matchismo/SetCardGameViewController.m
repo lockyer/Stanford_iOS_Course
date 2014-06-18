@@ -7,7 +7,7 @@
 //
 
 #import "SetCardGameViewController.h"
-#import "PlayingCardDeck.h"
+#import "SetCardDeck.h"
 
 @interface SetCardGameViewController ()
 
@@ -18,7 +18,7 @@
 //overrides abstract parent method
 - (Deck *)createDeck
 {
-    return [[PlayingCardDeck alloc] init];
+    return [[SetCardDeck alloc] init];
 }
 
 //overrides abstract parent method
