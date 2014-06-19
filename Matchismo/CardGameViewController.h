@@ -14,4 +14,5 @@
 //protected, must implement in subclasses
 - (Deck *)createDeck;
 - (int)numberOfCardsToMatch;
+- (NSAttributedString *)titleForCard:(Card *)card;
 @end

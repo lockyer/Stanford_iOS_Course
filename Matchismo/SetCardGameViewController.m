@@ -8,6 +8,7 @@
 
 #import "SetCardGameViewController.h"
 #import "SetCardDeck.h"
+#import "SetCard.h"
 
 @interface SetCardGameViewController ()
 
@@ -25,6 +26,33 @@
 - (int)numberOfCardsToMatch
 {
     return 3;
+}
+
+- (NSAttributedString *)titleForCard:(Card *)card
+{
+    NSMutableDictionary* attributesDictionary = [[NSMutableDictionary alloc] init];
+    if([card isKindOfClass:[SetCard class]]) {
+        SetCard* setCard = (SetCard *)card;
+
+        if([setCard.shading isEqualToString:@"open"])
+        {
+            [attributesDictionary setObject:@8 forKey:NSStrokeWidthAttributeName];
+        }
+        
+        if([setCard.color isEqualToString:@"red"])
+        {
+            [attributesDictionary setObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
+        }
+        else if([setCard.color isEqualToString:@"green"])
+        {
+            [attributesDictionary setObject:[UIColor greenColor] forKey:NSForegroundColorAttributeName];
+        }
+        else if([setCard.color isEqualToString:@"purple"])
+        {
+            [attributesDictionary setObject:[UIColor purpleColor] forKey:NSForegroundColorAttributeName];
+        }
+    }
+    return [[NSAttributedString alloc] initWithString:(card.isChosen ? card.contents : @"") attributes:attributesDictionary];
 }
 
 @end
