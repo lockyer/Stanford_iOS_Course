@@ -34,22 +34,32 @@
     if([card isKindOfClass:[SetCard class]]) {
         SetCard* setCard = (SetCard *)card;
 
+        float alpha = 1;
+        
         if([setCard.shading isEqualToString:@"open"])
         {
             [attributesDictionary setObject:@8 forKey:NSStrokeWidthAttributeName];
         }
+        else if([setCard.shading isEqualToString:@"striped"])
+        {
+            alpha = 0.2f;
+        }
+        else if([setCard.shading isEqualToString:@"solid"])
+        {
+            alpha = 1;
+        }
         
         if([setCard.color isEqualToString:@"red"])
         {
-            [attributesDictionary setObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
+            [attributesDictionary setObject:[UIColor colorWithRed:1 green:0 blue:0 alpha:alpha] forKey:NSForegroundColorAttributeName];
         }
         else if([setCard.color isEqualToString:@"green"])
         {
-            [attributesDictionary setObject:[UIColor greenColor] forKey:NSForegroundColorAttributeName];
+            [attributesDictionary setObject:[UIColor colorWithRed:0 green:1 blue:0 alpha:alpha] forKey:NSForegroundColorAttributeName];
         }
         else if([setCard.color isEqualToString:@"purple"])
         {
-            [attributesDictionary setObject:[UIColor purpleColor] forKey:NSForegroundColorAttributeName];
+            [attributesDictionary setObject:[UIColor colorWithRed:1 green:0 blue:1 alpha:alpha] forKey:NSForegroundColorAttributeName];
         }
     }
     return [[NSAttributedString alloc] initWithString:(card.isChosen ? card.contents : @"") attributes:attributesDictionary];
