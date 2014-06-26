@@ -84,24 +84,38 @@
     for(UIButton *cardButton in self.cardButtons){
         NSUInteger cardIndex = [self.cardButtons indexOfObject:cardButton];
         Card* card = [self.game cardAtIndex:cardIndex];
-        [cardButton setAttributedTitle:[self titleForCard:card]
+        NSAttributedString* title = card.isChosen ? [self titleForCard:card] : [[NSAttributedString alloc] init];
+        [cardButton setAttributedTitle:title
                               forState:UIControlStateNormal];
         [cardButton setBackgroundImage:[self backgroundImageForCard:card]
                               forState:UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
     }
     
-    self.descriptionLabel.text = @"";
+    self.descriptionLabel.attributedText = [[NSAttributedString alloc] init];
     for(Card* card in [self.game getLastMatches])
     {
-        self.descriptionLabel.text = [self.descriptionLabel.text stringByAppendingString:card.contents];
+        NSMutableAttributedString* mutableAttributedText = [self.descriptionLabel.attributedText mutableCopy];
+        [mutableAttributedText appendAttributedString:[self titleForCard:card]];
+        self.descriptionLabel.attributedText = mutableAttributedText;
     }
 
     if(self.game.endOfRound){
         if(self.game.lastScore > 0){
-            self.descriptionLabel.text = [NSString stringWithFormat:@"Matched %@ for %d points", self.descriptionLabel.text, self.game.lastScore];
+            NSMutableAttributedString* mutableAttributedText = [[NSMutableAttributedString alloc] init];
+            [mutableAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@"Matched "]];
+            [mutableAttributedText appendAttributedString:self.descriptionLabel.attributedText];
+            NSString* pointsString = [NSString stringWithFormat:@" for %d points", self.game.lastScore];
+            NSAttributedString* attributedPointsString = [[NSAttributedString alloc] initWithString:pointsString];
+            [mutableAttributedText appendAttributedString:attributedPointsString];
+            self.descriptionLabel.attributedText = mutableAttributedText;
         } else if(self.game.lastScore < 0) {
-            self.descriptionLabel.text = [NSString stringWithFormat:@"%@ don't match, %d points!", self.descriptionLabel.text, self.game.lastScore];
+            NSMutableAttributedString* mutableAttributedText = [self.descriptionLabel.attributedText mutableCopy];
+            [mutableAttributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@" don't match, "]];
+            NSString* pointsString = [NSString stringWithFormat:@" %d points!", self.game.lastScore];
+            NSAttributedString* attributedPointsString = [[NSAttributedString alloc] initWithString:pointsString];
+            [mutableAttributedText appendAttributedString:attributedPointsString];
+            self.descriptionLabel.attributedText = mutableAttributedText;
         }
     }
     [self.history addObject:self.descriptionLabel.text];

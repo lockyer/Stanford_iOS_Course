@@ -31,8 +31,13 @@
 - (NSAttributedString *)titleForCard:(Card *)card
 {
     NSMutableDictionary* attributesDictionary = [[NSMutableDictionary alloc] init];
+    NSString* outputString = @"";
     if([card isKindOfClass:[SetCard class]]) {
         SetCard* setCard = (SetCard *)card;
+        
+        for(int i=0; i<setCard.number.intValue; ++i){
+            outputString = [outputString stringByAppendingString:setCard.symbol];
+        }
 
         float alpha = 1;
         
@@ -62,7 +67,7 @@
             [attributesDictionary setObject:[UIColor colorWithRed:1 green:0 blue:1 alpha:alpha] forKey:NSForegroundColorAttributeName];
         }
     }
-    return [[NSAttributedString alloc] initWithString:(card.isChosen ? card.contents : @"") attributes:attributesDictionary];
+    return [[NSAttributedString alloc] initWithString:outputString attributes:attributesDictionary];
 }
 
 @end
