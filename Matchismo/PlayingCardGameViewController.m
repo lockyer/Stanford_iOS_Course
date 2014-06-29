@@ -8,6 +8,7 @@
 
 #import "PlayingCardGameViewController.h"
 #import "PlayingCardDeck.h"
+#import "PlayingCard.h"
 
 @interface PlayingCardGameViewController ()
 
@@ -25,6 +26,22 @@
 - (int)numberOfCardsToMatch
 {
     return 2;
+}
+
+- (NSAttributedString *)titleForCard:(Card *)card ignoreChosen:(BOOL)ignoreChosen
+{
+    NSString* contents = card.contents;
+    if(!ignoreChosen && !card.chosen){
+        contents = @"";
+    }
+    UIColor* color = [UIColor blackColor];
+    if([card isKindOfClass:[PlayingCard class]]) {
+        PlayingCard* playingCard = (PlayingCard*)card;
+        if([@[@"♥︎", @"♦︎"] containsObject:playingCard.suit]){
+            color = [UIColor redColor];
+        }
+    }
+    return [[NSAttributedString alloc] initWithString:contents attributes:@{NSForegroundColorAttributeName : color }];
 }
 
 @end

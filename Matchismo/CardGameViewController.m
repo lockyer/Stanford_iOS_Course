@@ -7,6 +7,7 @@
 //
 
 #import "CardGameViewController.h"
+#import "HistoryViewController.h"
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
@@ -16,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (strong, nonatomic) NSMutableArray* history;
-@property (weak, nonatomic) IBOutlet UISlider *historySlider;
 @end
 
 @implementation CardGameViewController
@@ -24,17 +24,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.historySlider.enabled = false;
+    self.descriptionLabel.attributedText = [[NSAttributedString alloc] init];
+    [self newGame];
+    [self updateUI];
 }
 
-- (CardMatchingGame *)game
+- (void)newGame
 {
-    if(!_game){
-        _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
+    self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
                                                   usingDeck:[self createDeck]
                                             withTargetCount:[self numberOfCardsToMatch]];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"Show Set History"] || [segue.identifier isEqualToString:@"Show Playing Card History"])
+    {
+        if([segue.destinationViewController isKindOfClass:[HistoryViewController class]])
+        {
+            HistoryViewController* hvc = (HistoryViewController*)segue.destinationViewController;
+            hvc.history = self.history;
+        }
     }
-    return _game;
 }
 
 - (NSMutableArray *)history
@@ -57,13 +68,10 @@
     return -1;
 }
 
-- (IBAction)touchNewGameButton:(UIButton *)sender
-{
-    self.game = nil;
+- (IBAction)touchNewGameButton:(id)sender {
+    [self newGame];
     self.history = nil;
-    self.historySlider.value = 1;
     [self updateUI];
-    [self touchHistorySlider];
 }
 
 - (IBAction)touchCardButton:(UIButton *)sender {
@@ -72,19 +80,12 @@
     [self updateUI];
 }
 
-- (IBAction)touchHistorySlider {
-    int index = self.historySlider.value * (self.history.count - 1);
-    self.descriptionLabel.text = self.history[index];
-    self.descriptionLabel.alpha = self.historySlider.value == 1 ? 1 : 0.5;
-}
-
 - (void)updateUI
 {
-    self.historySlider.enabled = self.game.gameStarted;
     for(UIButton *cardButton in self.cardButtons){
         NSUInteger cardIndex = [self.cardButtons indexOfObject:cardButton];
         Card* card = [self.game cardAtIndex:cardIndex];
-        NSAttributedString* title = card.isChosen ? [self titleForCard:card] : [[NSAttributedString alloc] init];
+        NSAttributedString* title = [self titleForCard:card ignoreChosen:NO];
         [cardButton setAttributedTitle:title
                               forState:UIControlStateNormal];
         [cardButton setBackgroundImage:[self backgroundImageForCard:card]
@@ -96,7 +97,7 @@
     for(Card* card in [self.game getLastMatches])
     {
         NSMutableAttributedString* mutableAttributedText = [self.descriptionLabel.attributedText mutableCopy];
-        [mutableAttributedText appendAttributedString:[self titleForCard:card]];
+        [mutableAttributedText appendAttributedString:[self titleForCard:card ignoreChosen:YES]];
         self.descriptionLabel.attributedText = mutableAttributedText;
     }
 
@@ -118,13 +119,13 @@
             self.descriptionLabel.attributedText = mutableAttributedText;
         }
     }
-    [self.history addObject:self.descriptionLabel.text];
+    [self.history addObject:self.descriptionLabel.attributedText];
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
 }
 
-- (NSAttributedString *)titleForCard:(Card *)card
+- (NSAttributedString *)titleForCard:(Card *)card ignoreChosen:(BOOL)ignoreChosen
 {
-    return [[NSAttributedString alloc] initWithString:(card.isChosen ? card.contents : @"") attributes:@{NSForegroundColorAttributeName : [UIColor blackColor] }];
+    return [[NSAttributedString alloc] init];
 }
 
 - (UIImage *)backgroundImageForCard:(Card *)card

@@ -28,7 +28,7 @@
     return 3;
 }
 
-- (NSAttributedString *)titleForCard:(Card *)card
+- (NSAttributedString *)titleForCard:(Card *)card ignoreChosen:(BOOL)ignoreChosen
 {
     NSMutableDictionary* attributesDictionary = [[NSMutableDictionary alloc] init];
     NSString* outputString = @"";
@@ -68,6 +68,11 @@
         }
     }
     return [[NSAttributedString alloc] initWithString:outputString attributes:attributesDictionary];
+}
+
+- (UIImage *)backgroundImageForCard:(Card *)card
+{
+    return [UIImage imageNamed:card.isChosen ? @"SetChosen" : @"cardFront"];
 }
 
 @end

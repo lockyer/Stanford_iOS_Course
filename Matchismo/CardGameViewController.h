@@ -14,5 +14,5 @@
 //protected, must implement in subclasses
 - (Deck *)createDeck;
 - (int)numberOfCardsToMatch;
-- (NSAttributedString *)titleForCard:(Card *)card;
+- (NSAttributedString *)titleForCard:(Card *)card ignoreChosen:(BOOL)ignoreChosen;
 @end

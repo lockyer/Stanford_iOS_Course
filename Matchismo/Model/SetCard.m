@@ -58,43 +58,31 @@
     SetCard* b = otherCards[0];
     SetCard* c = otherCards[1];
     
-    //All Match
-    if([a.number isEqualToNumber:b.number] && [b.number isEqualToNumber:c.number])
-    {
-        return 1;
-    }
-    if([a.symbol isEqualToString:b.symbol] && [b.symbol isEqualToString:c.symbol])
-    {
-        return 1;
-    }
-    if([a.shading isEqualToString:b.shading] && [b.shading isEqualToString:c.shading])
-    {
-        return 1;
-    }
-    if([a.color isEqualToString:b.color] && [b.color isEqualToString:c.color])
-    {
-        return 1;
+    BOOL allNumbersSame = [a.number isEqualToNumber:b.number] && [b.number isEqualToNumber:c.number];
+    BOOL allNumbersDiff = ![a.number isEqualToNumber:b.number] && ![b.number isEqualToNumber:c.number] && ![c.number isEqualToNumber:a.number];
+    if(!(allNumbersSame || allNumbersDiff)){
+        return 0;
     }
     
-    //All Different
-    if(![a.number isEqualToNumber:b.number] && ![b.number isEqualToNumber:c.number] && ![c.number isEqualToNumber:a.number])
-    {
-        return 1;
-    }
-    if(![a.symbol isEqualToString:b.symbol] && ![b.symbol isEqualToString:c.symbol] && ![c.symbol isEqualToString:a.symbol])
-    {
-        return 1;
-    }
-    if(![a.shading isEqualToString:b.shading] && ![b.shading isEqualToString:c.shading] && ![c.shading isEqualToString:a.shading])
-    {
-        return 1;
-    }
-    if(![a.color isEqualToString:b.color] && ![b.color isEqualToString:c.color] && ![c.color isEqualToString:a.color])
-    {
-        return 1;
+    BOOL allSymbolsSame = [a.symbol isEqualToString:b.symbol] && [b.symbol isEqualToString:c.symbol];
+    BOOL allSymbolsDiff = ![a.symbol isEqualToString:b.symbol] && ![b.symbol isEqualToString:c.symbol] && ![c.symbol isEqualToString:a.symbol];
+    if(!(allSymbolsSame || allSymbolsDiff)){
+        return 0;
     }
     
-    return 0;
+    BOOL allShadingSame = [a.shading isEqualToString:b.shading] && [b.shading isEqualToString:c.shading];
+    BOOL allShadingDiff = ![a.shading isEqualToString:b.shading] && ![b.shading isEqualToString:c.shading] && ![c.shading isEqualToString:a.shading];
+    if(!(allShadingSame || allShadingDiff)){
+        return 0;
+    }
+    
+    BOOL allColorSame = [a.color isEqualToString:b.color] && [b.color isEqualToString:c.color];
+    BOOL allColorDiff = ![a.color isEqualToString:b.color] && ![b.color isEqualToString:c.color] && ![c.color isEqualToString:a.color];
+    if(!(allColorSame || allColorDiff)){
+        return 0;
+    }
+    
+    return 5;
 }
 
 - (instancetype)init
