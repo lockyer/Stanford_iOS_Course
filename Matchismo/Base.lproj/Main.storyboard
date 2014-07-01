@@ -448,7 +448,39 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1271" y="125"/>
+            <point key="canvasLocation" x="1271" y="29"/>
+        </scene>
+        <!--High Score View Controller - High Scores-->
+        <scene sceneID="S4o-kF-s8E">
+            <objects>
+                <viewController id="aGg-ZC-Lpt" customClass="HighScoreViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3gu-TK-YXz"/>
+                        <viewControllerLayoutGuide type="bottom" id="GQj-f0-cCa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6kK-oA-RB6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Un0-LT-ipf">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="High Scores" id="hMH-qc-cka"/>
+                    <connections>
+                        <outlet property="highScoreList" destination="Un0-LT-ipf" id="VJ8-i7-xRl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zFj-Sv-eIb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1271" y="722"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="wab-rS-qvi">
@@ -463,11 +495,12 @@
                     <connections>
                         <segue destination="AMP-Nd-BG5" kind="relationship" relationship="viewControllers" id="6Nk-4q-LBY"/>
                         <segue destination="YBl-Tv-Bck" kind="relationship" relationship="viewControllers" id="WHm-Ci-c7B"/>
+                        <segue destination="aZh-0C-4uH" kind="relationship" relationship="viewControllers" id="xXR-Iv-veb"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jYO-zT-GcG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="273" y="-244"/>
+            <point key="canvasLocation" x="223" y="29"/>
         </scene>
         <!--Set Card Game View Controller - Set Cards-->
         <scene sceneID="lI4-q3-qc1">
@@ -783,7 +816,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Okk-fp-BsN" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1271" y="-557"/>
+            <point key="canvasLocation" x="1271" y="-625"/>
         </scene>
         <!--History View Controller - History-->
         <scene sceneID="edK-4R-1vM">
@@ -814,7 +847,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1C8-7m-Ubu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1778" y="-244"/>
+            <point key="canvasLocation" x="1820" y="-264"/>
         </scene>
         <!--Navigation Controller - Playing Cards-->
         <scene sceneID="eJC-fA-HQC">
@@ -833,7 +866,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YeG-9O-VRP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="827" y="125"/>
+            <point key="canvasLocation" x="827" y="29"/>
         </scene>
         <!--Navigation Controller - Set Cards-->
         <scene sceneID="VDj-Md-BMA">
@@ -852,13 +885,33 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="827" y="-557"/>
+            <point key="canvasLocation" x="827" y="-625"/>
+        </scene>
+        <!--Navigation Controller - High Scores-->
+        <scene sceneID="pu2-PT-um8">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aZh-0C-4uH" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="High Scores" image="ladder" id="4n4-Oc-ht4"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7Ms-M3-yVr">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="aGg-ZC-Lpt" kind="relationship" relationship="rootViewController" id="eKh-ew-bCP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ymb-Wb-cr6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="821" y="722"/>
         </scene>
     </scenes>
     <resources>
-        <image name="PlayingCardsTabBarIcon" width="30" height="30"/>
-        <image name="SetCardsTabBarIcon" width="30" height="30"/>
+        <image name="PlayingCardsTabBarIcon" width="32" height="32"/>
+        <image name="SetCardsTabBarIcon" width="32" height="32"/>
         <image name="cardBack" width="64" height="96"/>
+        <image name="ladder" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

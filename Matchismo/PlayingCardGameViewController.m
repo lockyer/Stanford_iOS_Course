@@ -44,4 +44,9 @@
     return [[NSAttributedString alloc] initWithString:contents attributes:@{NSForegroundColorAttributeName : color }];
 }
 
+- (NSString *)titleForGame
+{
+    return @"Cards";
+}
+
 @end

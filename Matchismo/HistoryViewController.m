@@ -10,7 +10,6 @@
 
 @interface HistoryViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *historyTextView;
-
 @end
 
 @implementation HistoryViewController

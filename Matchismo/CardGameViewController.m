@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (strong, nonatomic) NSMutableArray* history;
+@property (strong, nonatomic) NSDate* startingDate;
 @end
 
 @implementation CardGameViewController
@@ -31,6 +32,7 @@
 
 - (void)newGame
 {
+    self.startingDate = [NSDate date];
     self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
                                                   usingDeck:[self createDeck]
                                             withTargetCount:[self numberOfCardsToMatch]];
@@ -69,6 +71,18 @@
 }
 
 - (IBAction)touchNewGameButton:(id)sender {
+    NSDictionary* scoreEntry = [[NSDictionary alloc] initWithObjectsAndKeys:
+        self.startingDate, @"startingDate",
+        [NSDate date], @"endingDate",
+        [NSNumber numberWithInt:self.game.score], @"score",
+        [self titleForGame], @"gameType",
+    nil];
+    NSMutableArray* highScores = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"highScores"] mutableCopy];
+    if(!highScores){
+        highScores = [[NSMutableArray alloc] init];
+    }
+    [highScores addObject:scoreEntry];
+    [[NSUserDefaults standardUserDefaults] setObject:highScores forKey:@"highScores"];
     [self newGame];
     self.history = nil;
     [self updateUI];

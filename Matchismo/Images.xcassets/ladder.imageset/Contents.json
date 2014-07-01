@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "cards-32.png"
+      "filename" : "ladder-32.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "cards-50.png"
+      "filename" : "ladder-50.png"
     }
   ],
   "info" : {

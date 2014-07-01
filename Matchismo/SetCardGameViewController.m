@@ -75,4 +75,9 @@
     return [UIImage imageNamed:card.isChosen ? @"SetChosen" : @"cardFront"];
 }
 
+- (NSString *)titleForGame
+{
+    return @"Set";
+}
+
 @end

@@ -15,4 +15,5 @@
 - (Deck *)createDeck;
 - (int)numberOfCardsToMatch;
 - (NSAttributedString *)titleForCard:(Card *)card ignoreChosen:(BOOL)ignoreChosen;
+- (NSString *)titleForGame;
 @end
