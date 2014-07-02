@@ -25,6 +25,7 @@
     NSMutableAttributedString* mutableHighScoreList = [[NSMutableAttributedString alloc] init];
     
     NSArray* highScores = [[NSUserDefaults standardUserDefaults] arrayForKey:@"highScores"];
+    
     for(NSDictionary* scoreEntry in highScores)
     {
         NSDate* startingDate = [scoreEntry valueForKey:@"startingDate"];
